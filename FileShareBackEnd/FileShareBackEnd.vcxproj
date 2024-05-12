@@ -88,15 +88,17 @@
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/asioLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/asioLibrary;/usr/local/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>
       </AdditionalOptions>
       <Verbose>true</Verbose>
+      <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>/usr/local/lib/arm-linux-gnueabihf/libcpr.so;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>-pthread %(AdditionalOptions)</AdditionalOptions>
+      <LibraryDependencies>%(LibraryDependencies)</LibraryDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
