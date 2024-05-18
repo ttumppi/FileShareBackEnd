@@ -3,19 +3,34 @@
 #include <cpr/cpr.h>
 
 
-int main()
-{
-    cpr::Response responseToGet = cpr::Get(cpr::Url("http://localhost:3000/test"),
+std::string FetchHomePage() {
+    cpr::Response responseToGet = cpr::Get(cpr::Url("http://localhost:3000"),
         cpr::Authentication("user", "pass", cpr::AuthMode::BASIC));
 
-    std::cout << responseToGet.status_code;
+    return responseToGet.text;
+}
+std::string FetchAdvancedPage() {
+    cpr::Response responseToGet = cpr::Get(cpr::Url("http://localhost:3000/about"),
+        cpr::Authentication("user", "pass", cpr::AuthMode::BASIC));
+
+    return responseToGet.text;
+}
+
+int main()
+{
+    
+
 
     crow::SimpleApp app;
     CROW_ROUTE(app, "/")([]() {
-        return "Hello world";
+        return FetchHomePage();
+        });
+    CROW_ROUTE(app, "/about")([]() {
+        return FetchAdvancedPage();
         });
     app.port(65000).multithreaded().run();
     
     
     
 }
+
