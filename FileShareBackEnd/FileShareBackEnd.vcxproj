@@ -78,17 +78,21 @@
     <IncludePath>D:\CrowSource\Crow-master\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>E:\Repos\FileShareBackEnd\FileShareBackEnd\FileShareBackEnd;$(IncludePath)</IncludePath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="ServerRoutes.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="ServerRoutes.h" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/asioLibrary;/usr/local/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/asioLibrary;/usr/local/include;/home/admin/projects/FileShareBackEnd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>
       </AdditionalOptions>
       <Verbose>true</Verbose>
