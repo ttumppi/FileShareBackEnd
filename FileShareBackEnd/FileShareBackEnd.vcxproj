@@ -96,8 +96,11 @@
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <IncludePath>C:\Users\Tuomas\AppData\Local\Microsoft\Linux\HeaderCache\1.0\-1072439760\home\admin\libraryFiles\asioLibrary;E:\Repos\FileShareBackEnd\FileShareBackEnd\FileShareBackEnd;C:\Users\Tuomas\AppData\Local\Microsoft\Linux\HeaderCache\1.0\-1072439760\home\admin\libraryFiles\crowLibrary;C:\Users\Tuomas\AppData\Local\Microsoft\Linux\HeaderCache\1.0\-1072439760\home\admin\libraryFiles\jsoncpp;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Repos\FileShareBackEnd\FileShareBackEnd\FileShareBackEnd;$(IncludePath)</IncludePath>
     <CopyAdditionalIncludes>true</CopyAdditionalIncludes>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <IncludePath>E:\Repos\FileShareBackEnd\FileShareBackEnd\FileShareBackEnd;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
@@ -125,6 +128,18 @@
       <LibraryDependencies>jsoncpp;cpr;%(LibraryDependencies)</LibraryDependencies>
       <AdditionalLibraryDirectories>/usr/local/lib/arm-linux-gnueabihf;/home/admin/libraryFiles/jsoncpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SharedLibrarySearchPath>/home/admin/libraryFiles/jsoncpp;/usr/local/lib/arm-linux-gnueabihf;%(SharedLibrarySearchPath)</SharedLibrarySearchPath>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>/home/admin/libraryFiles/asioLibrary;/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/jsoncpp;/home/admin/projects/FileShareBackEnd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CppLanguageStandard>c++17</CppLanguageStandard>
+    </ClCompile>
+    <Link>
+      <SharedLibrarySearchPath>/home/admin/libraryFiles/jsoncpp;/usr/local/lib/arm-linux-gnueabihf;%(SharedLibrarySearchPath)</SharedLibrarySearchPath>
+      <LibraryDependencies>jsoncpp;cpr;%(LibraryDependencies)</LibraryDependencies>
+      <AdditionalOptions>-pthread -Wl,-rpath,/home/admin/libraryFiles/jsoncpp %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>/home/admin/libraryFiles/jsoncpp;/usr/local/lib/arm-linux-gnueabihf;%(Link.AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

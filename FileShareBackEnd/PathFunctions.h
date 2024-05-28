@@ -24,6 +24,7 @@ public:
 private:
 
 	void CreateDirectories(std::string& directory);
+	std::string GetFolders(std::string& fullPath);
 };
 
 

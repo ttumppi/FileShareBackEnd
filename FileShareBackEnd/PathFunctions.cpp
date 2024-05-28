@@ -36,8 +36,30 @@ void PathFunctions::CreateFile(std::string& fileName) {
 
 void PathFunctions::CreateDirectories(std::string& directories) {
 
-	if (FileExists(directories)) {
+	std::string folders = GetFolders(directories);
+
+	if (FileExists(folders)) {
 		return;
 	}
-	std::filesystem::create_directories(directories);
+	std::filesystem::create_directories(folders);
+}
+
+std::string PathFunctions::GetFolders(std::string& fullPath) {
+
+	int lastIndex;
+
+	for (int i = fullPath.length() - 1; i--;) {
+		if (fullPath[i] == '/' || fullPath[i] == '\\') {
+			lastIndex = i;
+			break;
+		}
+	}
+
+	while (fullPath[lastIndex] == '\\') {
+		lastIndex--;
+	}
+
+
+
+	return  fullPath.substr(0, lastIndex);
 }
