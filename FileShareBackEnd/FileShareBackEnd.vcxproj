@@ -34,6 +34,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PathFunctions.cpp" />
+    <ClCompile Include="ReadWriteJson.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="ServerRoutes.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PathFunctions.h" />
+    <ClInclude Include="ReadWriteJson.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="ServerRoutes.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{a7a19783-02a2-42f3-9678-23ae49ab9886}</ProjectGuid>
     <Keyword>Linux</Keyword>
@@ -47,6 +60,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
+    <RemoteCopyIncludeDirectories>/home/admin/libraryFiles/jsoncpp;$(RemoteCopyIncludeDirectories)</RemoteCopyIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -82,7 +96,7 @@
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Tuomas\AppData\Local\Microsoft\Linux\HeaderCache\1.0\-1072439760\home\admin\libraryFiles\asioLibrary;E:\Repos\FileShareBackEnd\FileShareBackEnd\FileShareBackEnd;C:\Users\Tuomas\AppData\Local\Microsoft\Linux\HeaderCache\1.0\-1072439760\home\admin\libraryFiles\crowLibrary;C:\Users\Tuomas\AppData\Local\Microsoft\Linux\HeaderCache\1.0\-1072439760\home\admin\libraryFiles\jsoncpp;$(IncludePath)</IncludePath>
     <CopyAdditionalIncludes>true</CopyAdditionalIncludes>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -102,7 +116,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/home/admin/libraryFiles/asioLibrary/;/home/admin/libraryFiles/asioLibrary/asio;/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/jsoncpp;/usr/local/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/home/admin/libraryFiles/asioLibrary/;/home/admin/libraryFiles/asioLibrary/asio;/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/jsoncpp;/usr/local/include;/home/admin/projects/FileShareBackEnd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
