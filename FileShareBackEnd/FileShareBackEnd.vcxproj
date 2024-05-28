@@ -81,15 +81,10 @@
     <IncludePath>E:\Repos\FileShareBackEnd\FileShareBackEnd\FileShareBackEnd;$(IncludePath)</IncludePath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Server.cpp" />
-    <ClCompile Include="ServerRoutes.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Server.h" />
-    <ClInclude Include="ServerRoutes.h" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <IncludePath>$(IncludePath)</IncludePath>
+    <CopyAdditionalIncludes>true</CopyAdditionalIncludes>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <AdditionalIncludeDirectories>/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/asioLibrary;/usr/local/include;/home/admin/projects/FileShareBackEnd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -107,8 +102,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/home/admin/libraryFiles/asio/include/asio;/home/admin/libraryFiles/asio/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/home/admin/libraryFiles/asioLibrary/;/home/admin/libraryFiles/asioLibrary/asio;/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/jsoncpp;/usr/local/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>-pthread -Wl,-rpath,/home/admin/libraryFiles/jsoncpp %(AdditionalOptions)</AdditionalOptions>
+      <LibraryDependencies>jsoncpp;cpr;%(LibraryDependencies)</LibraryDependencies>
+      <AdditionalLibraryDirectories>/usr/local/lib/arm-linux-gnueabihf;/home/admin/libraryFiles/jsoncpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SharedLibrarySearchPath>/home/admin/libraryFiles/jsoncpp;/usr/local/lib/arm-linux-gnueabihf;%(SharedLibrarySearchPath)</SharedLibrarySearchPath>
+    </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
