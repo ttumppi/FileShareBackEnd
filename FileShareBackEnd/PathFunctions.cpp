@@ -5,9 +5,6 @@
 #include <fstream>
 #include <PathFunctions.h>
 
-PathFunctions::PathFunctions() {
-
-}
 
 
 
@@ -62,4 +59,11 @@ std::string PathFunctions::GetFolders(std::string& fullPath) {
 
 
 	return  fullPath.substr(0, lastIndex);
+}
+
+void PathFunctions::DeleteFile(std::string& fileName) {
+
+	if (FileExists(fileName)) {
+		std::filesystem::remove(fileName);
+	}
 }

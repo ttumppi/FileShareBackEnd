@@ -10,21 +10,21 @@ class PathFunctions {
 public:
 
 
-	PathFunctions();
 
-	std::string GetCurrentPath();
+	static std::string GetCurrentPath();
 
-	bool FileExists(std::string &fileName);
+	static bool FileExists(std::string &fileName);
 
-	void CreateFile(std::string& fileName);
+	static void CreateFile(std::string& fileName);
 
-	
+	static void DeleteFile(std::string& fileName);
 
 
 private:
 
-	void CreateDirectories(std::string& directory);
-	std::string GetFolders(std::string& fullPath);
+	static void CreateDirectories(std::string& directory);
+
+	static std::string GetFolders(std::string& fullPath);
 };
 
 
