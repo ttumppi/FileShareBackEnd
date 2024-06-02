@@ -19,6 +19,8 @@ private:
 
 	std::string _salt;
 	Json::Value _users;
+
+	
 };
 
 

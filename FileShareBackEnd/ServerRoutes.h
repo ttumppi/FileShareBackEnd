@@ -20,6 +20,9 @@ public:
 	crow::response FetchScriptFile();
 
 	crow::response ValidateLoginAndRedirect(const crow::request& request, Json::Value users, std::string salt);
+
+private:
+	void AddCORSHeaders(crow::response& request);
 };
 
 #endif // SERVER_ROUTES_H

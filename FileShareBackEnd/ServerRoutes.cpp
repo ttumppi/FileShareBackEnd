@@ -36,6 +36,7 @@ crow::response ServerRoutes::FetchCSSFile() {
     resp.code = 200; 
     resp.add_header("Content-Type", "text/css");
     resp.body = buffer.str();
+    AddCORSHeaders(resp);
     return resp;
 }
 
@@ -53,6 +54,7 @@ crow::response ServerRoutes::FetchScriptFile() {
     resp.code = 200;
 
     resp.body = buffer.str();
+    AddCORSHeaders(resp);
     return resp;
 }
 
@@ -82,8 +84,15 @@ crow::response ServerRoutes::ValidateLoginAndRedirect(const crow::request& reque
         response.add_header("Location", "/login/failed");
     }
 
+    AddCORSHeaders(response);
+
     return response;
 
 }
 
+
+void ServerRoutes::AddCORSHeaders(crow::response& response) {
+
+    response.add_header("Access-Control-Allow-Origin", "*");
+}
     
