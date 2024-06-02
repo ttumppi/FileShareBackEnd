@@ -1,8 +1,13 @@
 #include <crow_all.h>
 #include <ServerRoutes.h>
 #include <Server.h>
+#include <json.h>
 
-Server::Server() {
+Server::Server(Json::Value users, std::string salt) {
+
+    _users = users;
+    _salt = salt;
+
     CROW_ROUTE(app, "/")([this]() {
         return routes.FetchHomePage();
         });
@@ -20,8 +25,18 @@ Server::Server() {
         });
 
     CROW_ROUTE(app, "/login").methods(crow::HTTPMethod::POST)([this](const crow::request& req) {
-        return "toimii";
+        return routes.ValidateLoginAndRedirect(req, _users, _salt);
         });
+
+    CROW_ROUTE(app, "/login/successfull")([this]() {
+        return "successfull";
+        });
+
+    CROW_ROUTE(app, "/login/failed")([this]() {
+        return "failed";
+        });
+
+
 }
 
 void Server::Start() {

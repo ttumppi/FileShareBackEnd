@@ -3,6 +3,8 @@
 #include <crow_all.h>
 #include <cpr/cpr.h>
 #include <ServerRoutes.h>
+#include <json.h>
+#include <TurnStringSecure.h>
 
 ServerRoutes::ServerRoutes() {
 
@@ -52,6 +54,36 @@ crow::response ServerRoutes::FetchScriptFile() {
 
     resp.body = buffer.str();
     return resp;
+}
+
+crow::response ServerRoutes::ValidateLoginAndRedirect(const crow::request& request, Json::Value users, std::string salt) {
+    std::string body = request.body;
+
+    crow::query_string parameters(body);
+
+    std::string userNameKey = "username";
+
+    std::string passwordKey = "password";
+
+    std::string userName = parameters.get(userNameKey);
+
+    std::string password = parameters.get(passwordKey);
+
+
+    crow::response response;
+    response.code = 303;
+
+    if (users[userName] == TurnStringSecure::HashString(password, salt)) {
+
+        response.add_header("Location", "/login/successfull");
+
+    }
+    else {
+        response.add_header("Location", "/login/failed");
+    }
+
+    return response;
+
 }
 
     

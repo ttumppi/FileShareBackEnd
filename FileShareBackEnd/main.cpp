@@ -20,7 +20,7 @@ int main()
     ProcedureBeforeServerStart();
 
 
-    Server server;
+    Server server = Server(_users, _salt);
     server.Start();
     
 }
