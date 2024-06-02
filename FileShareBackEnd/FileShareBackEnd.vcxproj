@@ -40,12 +40,14 @@
     <ClCompile Include="ReadWriteJson.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="ServerRoutes.cpp" />
+    <ClCompile Include="TurnStringSecure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PathFunctions.h" />
     <ClInclude Include="ReadWriteJson.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerRoutes.h" />
+    <ClInclude Include="TurnStringSecure.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{a7a19783-02a2-42f3-9678-23ae49ab9886}</ProjectGuid>
@@ -119,15 +121,15 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/home/admin/libraryFiles/asioLibrary/;/home/admin/libraryFiles/asioLibrary/asio;/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/jsoncpp;/usr/local/include;/home/admin/projects/FileShareBackEnd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/home/admin/libraryFiles/asioLibrary/;/home/admin/libraryFiles/asioLibrary/asio;/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/jsoncpp;/usr/local/include;/home/admin/projects/FileShareBackEnd;/home/admin/libraryFiles/opensslLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>-pthread -Wl,-rpath,/home/admin/libraryFiles/jsoncpp %(AdditionalOptions)</AdditionalOptions>
-      <LibraryDependencies>jsoncpp;cpr;%(LibraryDependencies)</LibraryDependencies>
-      <AdditionalLibraryDirectories>/usr/local/lib/arm-linux-gnueabihf;/home/admin/libraryFiles/jsoncpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <SharedLibrarySearchPath>/home/admin/libraryFiles/jsoncpp;/usr/local/lib/arm-linux-gnueabihf;%(SharedLibrarySearchPath)</SharedLibrarySearchPath>
+      <LibraryDependencies>jsoncpp;cpr;crypto;%(LibraryDependencies)</LibraryDependencies>
+      <AdditionalLibraryDirectories>/usr/local/lib/arm-linux-gnueabihf;/home/admin/libraryFiles/jsoncpp;/home/admin/libraryFiles/opensslLibrary;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SharedLibrarySearchPath>/home/admin/libraryFiles/jsoncpp;/usr/local/lib/arm-linux-gnueabihf;/home/admin/libraryFiles/opensslLibrary;%(SharedLibrarySearchPath)</SharedLibrarySearchPath>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">

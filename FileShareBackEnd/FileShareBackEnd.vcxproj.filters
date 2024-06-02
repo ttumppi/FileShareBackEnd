@@ -24,6 +24,9 @@
     <ClCompile Include="ServerRoutes.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="TurnStringSecure.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PathFunctions.h">
@@ -36,6 +39,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="ServerRoutes.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnStringSecure.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

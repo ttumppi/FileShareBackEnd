@@ -15,6 +15,8 @@ public:
 	std::string FetchDebugPage();
 
 	crow::response FetchCSSFile();
+
+	crow::response FetchScriptFile();
 };
 
 #endif // SERVER_ROUTES_H

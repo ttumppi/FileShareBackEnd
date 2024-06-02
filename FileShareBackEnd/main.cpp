@@ -5,6 +5,7 @@
 #include <json.h>
 #include <PathFunctions.h>
 #include <ReadWriteJson.h>
+#include <TurnStringSecure.h>
 
 void InitializeLoginFiles();
 void ReadSaltFromFile();
@@ -29,24 +30,18 @@ void InitializeLoginFiles() {
     std::cout << "Starting" << std::endl;
 
 
-    _users["Admin"] = "TestPassword";
-
-
     std::string currentPath = PathFunctions::GetCurrentPath();
 
     std::string usersFile = currentPath + "/UserConfigs/Users.json";
 
     if (PathFunctions::FileExists(usersFile)) {
 
-        Json::Value users = ReadWriteJson::Read(usersFile);
-
-        std::cout << users << std::endl;
+        Json::Value _users = ReadWriteJson::Read(usersFile);
     }
     else {
 
-        PathFunctions::CreateFile(usersFile);
-
-        ReadWriteJson::Write(usersFile, _users);
+        std::cout << "No user logins found, shutting down!" << std::endl;
+        exit(EXIT_FAILURE);
     }
 
 }
@@ -69,6 +64,7 @@ void ReadSaltFromFile() {
 }
 
 void ProcedureBeforeServerStart() {
-    InitializeLoginFiles();
     ReadSaltFromFile();
+    InitializeLoginFiles();
+    
 }

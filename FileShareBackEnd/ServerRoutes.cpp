@@ -24,24 +24,34 @@ std::string ServerRoutes::FetchDebugPage() {
 
 crow::response ServerRoutes::FetchCSSFile() {
     std::string path = "/home/admin/FileShareFrontEnd/src/public/html-objects.css";
-    std::ifstream file(path, std::ios::binary | std::ios::ate);
-    if (!file) {
-        return crow::response(404, "File not found");
-    }
-
-    std::streamsize size = file.tellg();
-    file.seekg(0, std::ios::beg);
-    std::vector<char> buffer(size);
-    if (!file.read(buffer.data(), size)) {
-        return crow::response(500, "Error reading file");
-    }
+    
+    std::ifstream file(path);
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    file.close();
 
     crow::response resp;
-    resp.code = 200; // HTTP OK
+    resp.code = 200; 
     resp.add_header("Content-Type", "text/css");
-    resp.body = std::string(buffer.begin(), buffer.end());
+    resp.body = buffer.str();
     return resp;
 }
 
+crow::response ServerRoutes::FetchScriptFile() {
+
+    std::string path = "/home/admin/FileShareFrontEnd/src/script.js";
+
+    std::ifstream file(path);
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    file.close();
+
+    crow::response resp;
+    resp.add_header("Content-Type", "application/javascript");
+    resp.code = 200;
+
+    resp.body = buffer.str();
+    return resp;
+}
 
     
