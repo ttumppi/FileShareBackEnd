@@ -2,6 +2,7 @@
 #include <cpr/cpr.h>
 #include <crow_all.h>
 #include <json.h>
+#include <CurrentUserManagement.h>
 
 #ifndef SERVER_ROUTES_H
 #define SERVER_ROUTES_H
@@ -9,7 +10,7 @@
 class ServerRoutes {
 public:
 
-	ServerRoutes();
+	ServerRoutes(CurrentUserManagement& loggedInUsersManager);
 
 	std::string FetchHomePage();
 

@@ -27,6 +27,12 @@
     <ClCompile Include="TurnStringSecure.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\C++Tests\Tests\Tests\RandomToken.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="CurrentUserManagement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PathFunctions.h">
@@ -42,6 +48,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="TurnStringSecure.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\C++Tests\Tests\Tests\RandomToken.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="CurrentUserManagement.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
