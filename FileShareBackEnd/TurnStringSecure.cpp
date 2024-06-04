@@ -18,8 +18,14 @@ std::string TurnStringSecure::HashString(std::string& toEncrypt, std::string& sa
 
 	EVP_MD_CTX_free(context);
 
+	std::string hashInString = "";
 	
+	for (int i = 0; i < lengthOfHash; i++) {
+		int hashNumber = static_cast<int>(hash[i]);
+		hashInString += std::to_string(hashNumber);
+	}
 
-	return std::string(reinterpret_cast<char*>(hash));
+
+	return hashInString;
 }
 

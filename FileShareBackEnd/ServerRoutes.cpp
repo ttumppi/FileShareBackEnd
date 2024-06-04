@@ -59,23 +59,42 @@ crow::response ServerRoutes::FetchScriptFile() {
 }
 
 crow::response ServerRoutes::ValidateLoginAndRedirect(const crow::request& request, Json::Value users, std::string salt) {
-    std::string body = request.body;
+    std::string body = '?' + request.body;
 
-    crow::query_string parameters(body);
+    crow::query_string parameters(body.c_str());
 
     std::string userNameKey = "username";
 
     std::string passwordKey = "password";
 
-    std::string userName = parameters.get(userNameKey);
+    char* userNamePointer = parameters.get(userNameKey);
 
-    std::string password = parameters.get(passwordKey);
 
+    char* passwordPointer = parameters.get(passwordKey);
+
+    if (userNamePointer == nullptr || passwordPointer == nullptr) {
+        crow::response errorResponse;
+        errorResponse.code = 303;
+        errorResponse.add_header("Location", "/login/failed");
+        AddCORSHeaders(errorResponse);
+        return errorResponse;
+    }
+
+
+    std::string password = std::string(passwordPointer);
+
+    std::string userName = std::string(userNamePointer);
 
     crow::response response;
     response.code = 303;
 
-    if (users[userName] == TurnStringSecure::HashString(password, salt)) {
+    std::string enteredPassword = TurnStringSecure::HashString(password, salt);
+
+    std::cout << enteredPassword << std::endl;
+
+    std::cout << users[userName] << std::endl;
+
+    if (users[userName] == enteredPassword) {
 
         response.add_header("Location", "/login/successfull");
 

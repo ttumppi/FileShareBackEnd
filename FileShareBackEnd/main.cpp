@@ -36,7 +36,7 @@ void InitializeLoginFiles() {
 
     if (PathFunctions::FileExists(usersFile)) {
 
-        Json::Value _users = ReadWriteJson::Read(usersFile);
+        _users = ReadWriteJson::Read(usersFile);
     }
     else {
 
@@ -58,6 +58,8 @@ void ReadSaltFromFile() {
         PathFunctions::DeleteFile(filePath);
     }
     else {
+
+
         std::cout << "Closing software, security file not found!" << std::endl;
         exit(EXIT_FAILURE);
     }
