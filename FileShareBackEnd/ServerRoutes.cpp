@@ -7,8 +7,7 @@
 #include <TurnStringSecure.h>
 #include <RandomToken.h>
 
-ServerRoutes::ServerRoutes(CurrentUserManagement& sessionManagement) {
-    _sessionManagement = sessionManagement;
+ServerRoutes::ServerRoutes(CurrentUserManagement& sessionManagement) : _sessionManagement(sessionManagement) {
 }
 
 std::string ServerRoutes::FetchHomePage() {
@@ -91,17 +90,16 @@ crow::response ServerRoutes::ValidateLoginAndRedirect(const crow::request& reque
 
     std::string enteredPassword = TurnStringSecure::HashString(password, salt);
 
-    std::cout << enteredPassword << std::endl;
+    std::string test = users[userName].asString();
 
-    std::cout << users[userName] << std::endl;
-
-    if (users[userName] == enteredPassword) {
+    if (users[userName].asString() == enteredPassword) {
 
         response.add_header("Location", "/login/successfull");
 
         std::string token = _tokenGenerator.GetRandomToken(20);
+
         _sessionManagement.AddToken(token, userName);
-        response.add_header("Authorization", token);
+        response.set_header("Set-Cookie", token);
     }
     else {
         response.add_header("Location", "/login/failed");

@@ -9,13 +9,13 @@ public:
 
 	CurrentUserManagement();
 
-	bool ValidToken(std::string& token);
+	bool ValidToken(const std::string& token);
 
-	void AddToken(std::string& token, std::string& user);
+	void AddToken(const std::string& token, std::string& user);
 
 	void Close();
 
-	std::string GetUser(std::string& token);
+	std::string GetUser(const std::string& token);
 
 private:
 

@@ -4,12 +4,13 @@
 #include <json.h>
 #include <CurrentUserManagement.h>
 
-Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessionManagement) : routes(sessionManagement), _tokenMiddleware(sessionManagement),
-    app(_tokenMiddleware){
+Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessionManagement) : routes(sessionManagement), _tokenMiddleware(sessionManagement, _urlsNeedingToken),
+    app(_tokenMiddleware), _sessionManagement(sessionManagement){
 
     _users = users;
     _salt = salt;
-    _sessionManagement = sessionManagement;
+    
+    
     
 
     CROW_ROUTE(app, "/")([this]() {
@@ -40,7 +41,9 @@ Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessi
         return "failed";
         });
 
-    
+    CROW_ROUTE(app, "/homepage")([this]() {
+        return "Welcome to where the files reside!";
+        });
 
 }
 

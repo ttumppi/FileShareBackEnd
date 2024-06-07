@@ -3,6 +3,7 @@
 #include <json.h>
 #include <CurrentUserManagement.h>
 #include <TokenMiddleware.h>
+#include <list>
 
 #ifndef SERVER_H
 #define SERVER_H
@@ -17,11 +18,12 @@ private:
 
 	
 	ServerRoutes routes;
+	const std::list<std::string> _urlsNeedingToken{ "/homepage" };
 	TokenMiddleware _tokenMiddleware;
 	crow::App<TokenMiddleware> app;
 	std::string _salt;
 	Json::Value _users;
-	CurrentUserManagement _sessionManagement;
+	CurrentUserManagement& _sessionManagement;
 	
 	
 };

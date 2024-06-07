@@ -25,7 +25,7 @@ public:
 
 private:
 	void AddCORSHeaders(crow::response& request);
-	CurrentUserManagement _sessionManagement;
+	CurrentUserManagement& _sessionManagement;
 	RandomToken _tokenGenerator;
 };
 

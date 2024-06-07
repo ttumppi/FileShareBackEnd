@@ -2,6 +2,7 @@
 #define TOKEN_MIDDLEWARE_H
 #include <crow_all.h>
 #include <CurrentUserManagement.h>
+#include <list>
 
 class TokenMiddleware {
 public:
@@ -10,14 +11,17 @@ public:
 
 	};
 
-	TokenMiddleware(CurrentUserManagement& sessionManagement);
+	TokenMiddleware(CurrentUserManagement& sessionManagement, const std::list<std::string>& authenticatedUrls);
 
 	void before_handle(crow::request& request, crow::response& response, context& context);
 	void after_handle(crow::request& req, crow::response& response, context& context);
 
 private:
 
-	CurrentUserManagement _sessionManagement;
+	bool UrlNeedsAuthentication(std::string& url);
+
+	CurrentUserManagement& _sessionManagement;
+	std::list<std::string> _authenticatedUrls;
 };
 
 

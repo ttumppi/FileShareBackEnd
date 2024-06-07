@@ -3,26 +3,28 @@
 #include <chrono>
 #include <map>
 #include <thread>
+#include <cstdio>
+#include <iostream>
 
 CurrentUserManagement::CurrentUserManagement() {
 	_runState = true;
 	std::thread(&CurrentUserManagement::CheckTokens, this).detach();
 }
 
-void CurrentUserManagement::AddToken(std::string& token, std::string& user) {
+void CurrentUserManagement::AddToken(const std::string& token, std::string& user) {
 
 	std::chrono::_V2::system_clock::time_point currentTime = std::chrono::system_clock::now();
 
 	std::chrono::_V2::system_clock::time_point expireDate = currentTime + std::chrono::hours(1);
 
-	_tokens[token] = expireDate;
+	_tokens.insert({ token, expireDate });
 
-	_tokensWithUsers[token] = user;
+
+	_tokensWithUsers.insert({ token, user });
 }
 
-bool CurrentUserManagement::ValidToken(std::string& token) {
-
-	return _tokens.find(token) != _tokens.end();
+bool CurrentUserManagement::ValidToken(const std::string& token) {
+	return _tokens.count(token) > 0;
 }
 
 void CurrentUserManagement::Close() {
@@ -51,7 +53,7 @@ void CurrentUserManagement::CheckTokens() {
 	}
 }
 
-std::string CurrentUserManagement::GetUser(std::string& token) {
+std::string CurrentUserManagement::GetUser(const std::string& token) {
 
 	if (_tokensWithUsers.find(token) != _tokensWithUsers.end()) {
 		return _tokensWithUsers[token];
