@@ -6,6 +6,7 @@
 #include <PathFunctions.h>
 #include <ReadWriteJson.h>
 #include <TurnStringSecure.h>
+#include <CurrentUserManagement.h>
 
 void InitializeLoginFiles();
 void ReadSaltFromFile();
@@ -14,13 +15,14 @@ void ProcedureBeforeServerStart();
 
 Json::Value _users;
 std::string _salt;
+CurrentUserManagement _sessionManagement;
 
 int main()
 {
     ProcedureBeforeServerStart();
 
 
-    Server server = Server(_users, _salt);
+    Server server = Server(_users, _salt, _sessionManagement);
     server.Start();
     
 }

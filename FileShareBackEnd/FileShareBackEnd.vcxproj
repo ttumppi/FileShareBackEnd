@@ -35,22 +35,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\C++Tests\Tests\Tests\RandomToken.cpp" />
     <ClCompile Include="CurrentUserManagement.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PathFunctions.cpp" />
+    <ClCompile Include="RandomToken.cpp" />
     <ClCompile Include="ReadWriteJson.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="ServerRoutes.cpp" />
+    <ClCompile Include="TokenMiddleware.cpp" />
     <ClCompile Include="TurnStringSecure.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\C++Tests\Tests\Tests\RandomToken.h" />
     <ClInclude Include="CurrentUserManagement.h" />
     <ClInclude Include="PathFunctions.h" />
+    <ClInclude Include="RandomToken.h" />
     <ClInclude Include="ReadWriteJson.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerRoutes.h" />
+    <ClInclude Include="TokenMiddleware.h" />
     <ClInclude Include="TurnStringSecure.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

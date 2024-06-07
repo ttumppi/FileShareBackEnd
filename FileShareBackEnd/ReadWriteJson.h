@@ -1,6 +1,5 @@
 #include <string>
 #include <json.h>
-
 #ifndef READ_WRITE_JSON
 #define READ_WRITE_JSON
 

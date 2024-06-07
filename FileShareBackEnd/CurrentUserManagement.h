@@ -11,9 +11,11 @@ public:
 
 	bool ValidToken(std::string& token);
 
-	void AddToken(std::string& token);
+	void AddToken(std::string& token, std::string& user);
 
 	void Close();
+
+	std::string GetUser(std::string& token);
 
 private:
 
@@ -22,6 +24,7 @@ private:
 
 	
 	std::map<std::string, std::chrono::_V2::system_clock::time_point> _tokens;
+	std::map<std::string, std::string> _tokensWithUsers;
 	bool _runState;
 
 };

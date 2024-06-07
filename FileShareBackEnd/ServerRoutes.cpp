@@ -5,9 +5,10 @@
 #include <ServerRoutes.h>
 #include <json.h>
 #include <TurnStringSecure.h>
+#include <RandomToken.h>
 
-ServerRoutes::ServerRoutes() {
-
+ServerRoutes::ServerRoutes(CurrentUserManagement& sessionManagement) {
+    _sessionManagement = sessionManagement;
 }
 
 std::string ServerRoutes::FetchHomePage() {
@@ -98,6 +99,9 @@ crow::response ServerRoutes::ValidateLoginAndRedirect(const crow::request& reque
 
         response.add_header("Location", "/login/successfull");
 
+        std::string token = _tokenGenerator.GetRandomToken(20);
+        _sessionManagement.AddToken(token, userName);
+        response.add_header("Authorization", token);
     }
     else {
         response.add_header("Location", "/login/failed");

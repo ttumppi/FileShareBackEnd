@@ -6,16 +6,18 @@
 
 CurrentUserManagement::CurrentUserManagement() {
 	_runState = true;
-	std::thread(CheckTokens).detach();
+	std::thread(&CurrentUserManagement::CheckTokens, this).detach();
 }
 
-void CurrentUserManagement::AddToken(std::string& token) {
+void CurrentUserManagement::AddToken(std::string& token, std::string& user) {
 
 	std::chrono::_V2::system_clock::time_point currentTime = std::chrono::system_clock::now();
 
 	std::chrono::_V2::system_clock::time_point expireDate = currentTime + std::chrono::hours(1);
 
 	_tokens[token] = expireDate;
+
+	_tokensWithUsers[token] = user;
 }
 
 bool CurrentUserManagement::ValidToken(std::string& token) {
@@ -39,7 +41,7 @@ void CurrentUserManagement::CheckTokens() {
 
 			if (currentTime > tokenIterator->second) {
 				tokenIterator = _tokens.erase(tokenIterator);
-
+				_tokensWithUsers.erase(tokenIterator->first);
 			}
 			else {
 				++tokenIterator;
@@ -47,4 +49,13 @@ void CurrentUserManagement::CheckTokens() {
 		}
 
 	}
+}
+
+std::string CurrentUserManagement::GetUser(std::string& token) {
+
+	if (_tokensWithUsers.find(token) != _tokensWithUsers.end()) {
+		return _tokensWithUsers[token];
+	}
+
+	return "";
 }

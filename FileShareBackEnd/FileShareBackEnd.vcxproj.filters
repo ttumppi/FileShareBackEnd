@@ -27,10 +27,13 @@
     <ClCompile Include="TurnStringSecure.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\C++Tests\Tests\Tests\RandomToken.cpp">
+    <ClCompile Include="CurrentUserManagement.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="CurrentUserManagement.cpp">
+    <ClCompile Include="TokenMiddleware.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomToken.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,10 +53,13 @@
     <ClInclude Include="TurnStringSecure.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\C++Tests\Tests\Tests\RandomToken.h">
+    <ClInclude Include="CurrentUserManagement.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="CurrentUserManagement.h">
+    <ClInclude Include="TokenMiddleware.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomToken.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

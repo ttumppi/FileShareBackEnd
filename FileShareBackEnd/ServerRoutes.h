@@ -3,6 +3,7 @@
 #include <crow_all.h>
 #include <json.h>
 #include <CurrentUserManagement.h>
+#include <RandomToken.h>
 
 #ifndef SERVER_ROUTES_H
 #define SERVER_ROUTES_H
@@ -10,7 +11,7 @@
 class ServerRoutes {
 public:
 
-	ServerRoutes(CurrentUserManagement& loggedInUsersManager);
+	ServerRoutes(CurrentUserManagement& sessionManagement);
 
 	std::string FetchHomePage();
 
@@ -24,6 +25,8 @@ public:
 
 private:
 	void AddCORSHeaders(crow::response& request);
+	CurrentUserManagement _sessionManagement;
+	RandomToken _tokenGenerator;
 };
 
 #endif // SERVER_ROUTES_H

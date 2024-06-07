@@ -2,11 +2,15 @@
 #include <ServerRoutes.h>
 #include <Server.h>
 #include <json.h>
+#include <CurrentUserManagement.h>
 
-Server::Server(Json::Value users, std::string salt) {
+Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessionManagement) : routes(sessionManagement), _tokenMiddleware(sessionManagement),
+    app(_tokenMiddleware){
 
     _users = users;
     _salt = salt;
+    _sessionManagement = sessionManagement;
+    
 
     CROW_ROUTE(app, "/")([this]() {
         return routes.FetchHomePage();
@@ -36,6 +40,7 @@ Server::Server(Json::Value users, std::string salt) {
         return "failed";
         });
 
+    
 
 }
 
