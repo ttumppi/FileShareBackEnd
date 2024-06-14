@@ -14,7 +14,7 @@ std::string PathFunctions::GetCurrentPath() {
 }
 
 
-bool PathFunctions::FileExists(std::string &fileName) {
+bool PathFunctions::FileExists(const std::string &fileName) {
 
 	if (FILE* file = fopen(fileName.c_str(), "r")) {
 		fclose(file);
@@ -23,7 +23,7 @@ bool PathFunctions::FileExists(std::string &fileName) {
 	return false;
 }
 
-void PathFunctions::CreateFile(std::string& fileName) {
+void PathFunctions::CreateFile(const std::string& fileName) {
 
 	CreateDirectories(fileName);
 
@@ -31,7 +31,7 @@ void PathFunctions::CreateFile(std::string& fileName) {
 	file.close();
 }
 
-void PathFunctions::CreateDirectories(std::string& directories) {
+void PathFunctions::CreateDirectories(const std::string& directories) {
 
 	std::string folders = GetFolders(directories);
 
@@ -41,7 +41,7 @@ void PathFunctions::CreateDirectories(std::string& directories) {
 	std::filesystem::create_directories(folders);
 }
 
-std::string PathFunctions::GetFolders(std::string& fullPath) {
+std::string PathFunctions::GetFolders(const std::string& fullPath) {
 
 	int lastIndex;
 
@@ -61,7 +61,7 @@ std::string PathFunctions::GetFolders(std::string& fullPath) {
 	return  fullPath.substr(0, lastIndex);
 }
 
-void PathFunctions::DeleteFile(std::string& fileName) {
+void PathFunctions::DeleteFile(const std::string& fileName) {
 
 	if (FileExists(fileName)) {
 		std::filesystem::remove(fileName);

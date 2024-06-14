@@ -6,6 +6,7 @@
 #include <json.h>
 #include <TurnStringSecure.h>
 #include <RandomToken.h>
+#include <ManageFiles.h>
 
 ServerRoutes::ServerRoutes(CurrentUserManagement& sessionManagement) : _sessionManagement(sessionManagement) {
 }
@@ -117,3 +118,7 @@ void ServerRoutes::AddCORSHeaders(crow::response& response) {
     response.add_header("Access-Control-Allow-Origin", "*");
 }
     
+crow::response ServerRoutes::GatherFile(const crow::request& request, std::string& fileName) {
+
+    ManageFiles::CreatefileFromString()
+}

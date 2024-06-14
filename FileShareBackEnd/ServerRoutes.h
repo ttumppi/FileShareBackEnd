@@ -23,6 +23,8 @@ public:
 
 	crow::response ValidateLoginAndRedirect(const crow::request& request, Json::Value users, std::string salt);
 
+	crow::response GatherFile(const crow::request& request, std::string& fileName);
+
 private:
 	void AddCORSHeaders(crow::response& request);
 	CurrentUserManagement& _sessionManagement;

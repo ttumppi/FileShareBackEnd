@@ -36,6 +36,9 @@
     <ClCompile Include="RandomToken.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="ManageFiles.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PathFunctions.h">
@@ -60,6 +63,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="RandomToken.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="ManageFiles.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

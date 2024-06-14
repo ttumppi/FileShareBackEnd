@@ -45,6 +45,11 @@ Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessi
         return "Welcome to where the files reside!";
         });
 
+    CROW_ROUTE(app, "/upload").methods("POST"_method)([this](const crow::request& request){
+        request.get_header_value("filename");
+
+    });
+
 }
 
 void Server::Start() {

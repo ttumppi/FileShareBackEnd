@@ -13,18 +13,18 @@ public:
 
 	static std::string GetCurrentPath();
 
-	static bool FileExists(std::string &fileName);
+	static bool FileExists(const std::string &fileName);
 
-	static void CreateFile(std::string& fileName);
+	static void CreateFile(const std::string& fileName);
 
-	static void DeleteFile(std::string& fileName);
+	static void DeleteFile(const std::string& fileName);
 
 
 private:
 
-	static void CreateDirectories(std::string& directory);
+	static void CreateDirectories(const std::string& directory);
 
-	static std::string GetFolders(std::string& fullPath);
+	static std::string GetFolders(const std::string& fullPath);
 };
 
 

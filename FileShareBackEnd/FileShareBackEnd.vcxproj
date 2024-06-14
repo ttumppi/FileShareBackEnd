@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CurrentUserManagement.cpp" />
+    <ClCompile Include="ManageFiles.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PathFunctions.cpp" />
     <ClCompile Include="RandomToken.cpp" />
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CurrentUserManagement.h" />
+    <ClInclude Include="ManageFiles.h" />
     <ClInclude Include="PathFunctions.h" />
     <ClInclude Include="RandomToken.h" />
     <ClInclude Include="ReadWriteJson.h" />
