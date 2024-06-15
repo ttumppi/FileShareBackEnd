@@ -4,12 +4,17 @@
 #include <string>
 #include <PathFunctions.h>
 #include <map>
+#include <json.h>
 
 class ManageFiles {
 public:
 	ManageFiles();
+
 	bool CreatefileFromString(const std::string& data, const int size, const std::string& fileName, std::string& errors);
 	
+	Json::Value GetAllFiles();
+
+	std::string GetFileData(const int id, std::string& errors, std::string& filename);
 
 private:
 

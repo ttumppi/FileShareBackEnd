@@ -7,6 +7,7 @@
 #include <TurnStringSecure.h>
 #include <RandomToken.h>
 #include <ManageFiles.h>
+#include <StringParser.h>
 
 ServerRoutes::ServerRoutes(CurrentUserManagement& sessionManagement) : _sessionManagement(sessionManagement) {
 }
@@ -124,14 +125,29 @@ crow::response ServerRoutes::SaveFile(const crow::request& request) {
     std::string fileName;
     std::string data;
 
-    for (int i = 0; i < message.parts.size(); i++) {
+    for (crow::multipart::part messagePart : message.parts) {
 
-        if (!crow::multipart::get_header_object(message.headers, "filename").value.empty()) {
-            fileName = crow::multipart::get_header_object(message.headers, "filename").value;
-            data = message.parts[i].body;
-            break;
+        
+        crow::multipart::mph_map::iterator contentHeader = messagePart.headers.find("Content-Disposition");
+
+        if (contentHeader == messagePart.headers.end()) {
+            continue;
         }
+
+        std::string contentHeaderValue = contentHeader->second.value;
+
+        
+
+        std::string tryGetFileName = StringParser::FindValueWithKey("filename", contentHeaderValue, ';');
+
+        if (tryGetFileName.empty()) {
+            continue;
+        }
+        
+        data = messagePart.body;
     }
+
+    
 
     crow::response redirect;
     redirect.code = 303;
@@ -153,4 +169,44 @@ crow::response ServerRoutes::SaveFile(const crow::request& request) {
     redirect.add_header("Location", "/upload/success");
     AddCORSHeaders(redirect);
     return redirect;
+}
+
+crow::response ServerRoutes::GetAllFiles() {
+    Json::Value files = _manageFiles.GetAllFiles();
+
+    crow::response response;
+    response.code = 200;
+    response.set_header("Content-Type", "application/json");
+    response.body = files.asString();
+
+    return response;
+}
+
+crow::response ServerRoutes::GetFileData(const int id) {
+
+    std::string errors;
+    std::string fileName;
+    std::string data = _manageFiles.GetFileData(id, errors, fileName);
+
+    crow::response response;
+
+    if (!errors.empty()) {
+        response.code = 303;
+        response.add_header("Location", "/download/failed");
+        response.add_header("Errors", errors);
+        AddCORSHeaders(response);
+        return response;
+    }
+
+    std::ostringstream contentHeaderValue;
+    contentHeaderValue << "attachment; filename=\"" << fileName << "\"";
+
+    response.code = 200;
+    response.add_header("Content-Type", "application/octet-stream");
+    response.add_header("Content-Disposition", contentHeaderValue.str());
+
+    response.body = data;
+
+    return response;
+
 }

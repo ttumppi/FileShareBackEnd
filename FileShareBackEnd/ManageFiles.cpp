@@ -4,6 +4,7 @@
 #include<sys/types.h>
 #include<dirent.h>
 #include<fstream>
+#include<json.h>
 
 const std::string& ManageFiles::_savePath = PathFunctions::GetCurrentPath() + "/uploadedFiles";
 
@@ -55,4 +56,43 @@ bool ManageFiles::CreatefileFromString(const std::string& data, const int size, 
 	file.write(data.c_str(), size);
 	return true;
 
+}
+
+Json::Value ManageFiles::GetAllFiles() {
+
+	Json::Value values;
+
+	for (std::pair<int, std::string> pair : _fileIDs) {
+		values[pair.first] = pair.second;
+	}
+
+	return values;
+}
+
+std::string ManageFiles::GetFileData(const int id, std::string& errors, std::string& fileName) {
+	fileName = _fileIDs.find(id)->second;
+	
+	
+
+	if (!PathFunctions::FileExists(fileName)) {
+		errors = "File not found";
+		return "";
+	}
+
+	std::ifstream file(_savePath + "/" + fileName, std::ios::binary | std::ios::ate);
+
+	std::ifstream::pos_type fileSize = file.tellg();
+
+	file.seekg(0, std::ios::beg);
+
+	char* buffer = new char[fileSize];
+
+	file.read(buffer, fileSize);
+	file.close();
+
+	std::string data(buffer, fileSize);
+
+	delete[] buffer;
+
+	return data;
 }

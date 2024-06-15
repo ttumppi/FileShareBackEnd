@@ -42,15 +42,17 @@ Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessi
         });
 
     CROW_ROUTE(app, "/homepage")([this]() {
-        return "Welcome to where the files reside!";
+        return _routes.GetAllFiles();
         });
 
     CROW_ROUTE(app, "/upload").methods("POST"_method)([this](const crow::request& request){
         return _routes.SaveFile(request);
     });
 
-
-
+    CROW_ROUTE(app, "/download/<int>").methods("GET"_method)([this](const crow::request& request, crow::response& response, int id) {
+        return _routes.GetFileData(id);
+        });
+    
 }
 
 void Server::Start() {

@@ -26,6 +26,10 @@ public:
 
 	crow::response SaveFile(const crow::request& request);
 
+	crow::response GetAllFiles();
+
+	crow::response GetFileData(const int id);
+
 private:
 	void AddCORSHeaders(crow::response& request);
 	CurrentUserManagement& _sessionManagement;

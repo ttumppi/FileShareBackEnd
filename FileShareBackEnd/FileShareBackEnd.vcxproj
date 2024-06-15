@@ -43,6 +43,7 @@
     <ClCompile Include="ReadWriteJson.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="ServerRoutes.cpp" />
+    <ClCompile Include="StringParser.cpp" />
     <ClCompile Include="TokenMiddleware.cpp" />
     <ClCompile Include="TurnStringSecure.cpp" />
   </ItemGroup>
@@ -54,6 +55,7 @@
     <ClInclude Include="ReadWriteJson.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerRoutes.h" />
+    <ClInclude Include="StringParser.h" />
     <ClInclude Include="TokenMiddleware.h" />
     <ClInclude Include="TurnStringSecure.h" />
   </ItemGroup>
