@@ -118,7 +118,39 @@ void ServerRoutes::AddCORSHeaders(crow::response& response) {
     response.add_header("Access-Control-Allow-Origin", "*");
 }
     
-crow::response ServerRoutes::GatherFile(const crow::request& request, std::string& fileName) {
+crow::response ServerRoutes::SaveFile(const crow::request& request) {
 
-    ManageFiles::CreatefileFromString()
+    crow::multipart::message message = crow::multipart::message(request);
+    std::string fileName;
+    std::string data;
+
+    for (int i = 0; i < message.parts.size(); i++) {
+
+        if (!crow::multipart::get_header_object(message.headers, "filename").value.empty()) {
+            fileName = crow::multipart::get_header_object(message.headers, "filename").value;
+            data = message.parts[i].body;
+            break;
+        }
+    }
+
+    crow::response redirect;
+    redirect.code = 303;
+
+    if (fileName == "" || data == "") {
+        redirect.add_header("Location", "/upload");
+        AddCORSHeaders(redirect);
+        return redirect;
+    }
+
+    std::string errors = "";
+    if (!_manageFiles.CreatefileFromString(data, data.size(), fileName, errors)) {
+        redirect.add_header("Location", "/upload/failed");
+        redirect.add_header("Errors", errors);
+        AddCORSHeaders(redirect);
+        return redirect;
+    }
+
+    redirect.add_header("Location", "/upload/success");
+    AddCORSHeaders(redirect);
+    return redirect;
 }

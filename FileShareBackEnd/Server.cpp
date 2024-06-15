@@ -4,7 +4,7 @@
 #include <json.h>
 #include <CurrentUserManagement.h>
 
-Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessionManagement) : routes(sessionManagement), _tokenMiddleware(sessionManagement, _urlsNeedingToken),
+Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessionManagement) : _routes(sessionManagement), _tokenMiddleware(sessionManagement, _urlsNeedingToken),
     app(_tokenMiddleware), _sessionManagement(sessionManagement){
 
     _users = users;
@@ -14,23 +14,23 @@ Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessi
     
 
     CROW_ROUTE(app, "/")([this]() {
-        return routes.FetchHomePage();
+        return _routes.FetchHomePage();
         });
 
     CROW_ROUTE(app, "/debug")([this]() {
-        return routes.FetchDebugPage();
+        return _routes.FetchDebugPage();
         });
 
     CROW_ROUTE(app, "/css")([this]() {
-        return routes.FetchCSSFile();
+        return _routes.FetchCSSFile();
         });
 
     CROW_ROUTE(app, "/script")([this]() {
-        return routes.FetchScriptFile();
+        return _routes.FetchScriptFile();
         });
 
     CROW_ROUTE(app, "/login").methods(crow::HTTPMethod::POST)([this](const crow::request& req) {
-        return routes.ValidateLoginAndRedirect(req, _users, _salt);
+        return _routes.ValidateLoginAndRedirect(req, _users, _salt);
         });
 
     CROW_ROUTE(app, "/login/successfull")([this]() {
@@ -46,9 +46,10 @@ Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessi
         });
 
     CROW_ROUTE(app, "/upload").methods("POST"_method)([this](const crow::request& request){
-        request.get_header_value("filename");
-
+        return _routes.SaveFile(request);
     });
+
+
 
 }
 

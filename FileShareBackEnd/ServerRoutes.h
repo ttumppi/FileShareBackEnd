@@ -4,6 +4,7 @@
 #include <json.h>
 #include <CurrentUserManagement.h>
 #include <RandomToken.h>
+#include <ManageFiles.h>
 
 #ifndef SERVER_ROUTES_H
 #define SERVER_ROUTES_H
@@ -23,12 +24,13 @@ public:
 
 	crow::response ValidateLoginAndRedirect(const crow::request& request, Json::Value users, std::string salt);
 
-	crow::response GatherFile(const crow::request& request, std::string& fileName);
+	crow::response SaveFile(const crow::request& request);
 
 private:
 	void AddCORSHeaders(crow::response& request);
 	CurrentUserManagement& _sessionManagement;
 	RandomToken _tokenGenerator;
+	ManageFiles _manageFiles;
 };
 
 #endif // SERVER_ROUTES_H

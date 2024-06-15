@@ -17,7 +17,7 @@ public:
 private:
 
 	
-	ServerRoutes routes;
+	ServerRoutes _routes;
 	const std::list<std::string> _urlsNeedingToken{ "/homepage" };
 	TokenMiddleware _tokenMiddleware;
 	crow::App<TokenMiddleware> app;
