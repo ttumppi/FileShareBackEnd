@@ -184,6 +184,10 @@ std::string ServerRoutes::GetAllFiles() {
     Json::Value files = _manageFiles.GetAllFiles();
 
     std::string filesInString = ReadWriteJson::JsonToString(files);
+
+    if (filesInString.empty() || filesInString == "null") {
+        filesInString = "{}";
+    }
     cpr::Body body = cpr::Body(filesInString);
     cpr::Response response = cpr::Post(cpr::Url("http://localhost:3000/files"), body, 
         cpr::Header{{"Content-Type", "application/json"}});

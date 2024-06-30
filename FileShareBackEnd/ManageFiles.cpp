@@ -6,7 +6,7 @@
 #include<fstream>
 #include<json.h>
 
-const std::string& ManageFiles::_savePath = PathFunctions::GetCurrentPath() + "/uploadedFiles";
+const std::string& ManageFiles::_savePath = "/media/admin/ExternalStorage/uploadedFiles";
 
 ManageFiles::ManageFiles() {
 	ManageFiles::_availableID = CalculateAvailableIdAndInitFileMap();
@@ -38,7 +38,7 @@ int ManageFiles::CalculateAvailableIdAndInitFileMap() {
 
 bool ManageFiles::ErrorIfCheckFileNameExists(const std::string& fileName, std::string& errors) {
 
-	if (PathFunctions::FileExists(PathFunctions::GetCurrentPath() + "/uploadedFiles/" + fileName)) {
+	if (PathFunctions::FileExists(_savePath + "/" + fileName)) {
 		errors = "File exists";
 		return true;
 	}
@@ -51,7 +51,7 @@ bool ManageFiles::CreatefileFromString(const std::string& data, const int size, 
 		return false;
 	}
 
-	std::ofstream file(PathFunctions::GetCurrentPath() + "/uploadedFiles/" + fileName, std::ios::binary);
+	std::ofstream file(_savePath + "/" + fileName, std::ios::binary);
 	file.write(data.c_str(), size);
 
 	_fileIDs.insert({ ManageFiles::_availableID, fileName });
@@ -74,10 +74,9 @@ Json::Value ManageFiles::GetAllFiles() {
 
 std::string ManageFiles::GetFileData(const int id, std::string& errors, std::string& fileName) {
 	fileName = _fileIDs.find(id)->second;
-	std::string appPath = PathFunctions::GetCurrentPath();
 
 
-	if (!PathFunctions::FileExists(appPath + "/uploadedFiles/" + fileName)) {
+	if (!PathFunctions::FileExists(_savePath + "/" + fileName)) {
 		errors = "File not found";
 		return "";
 	}
