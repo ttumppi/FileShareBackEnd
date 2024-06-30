@@ -20,30 +20,29 @@ int ManageFiles::CalculateAvailableIdAndInitFileMap() {
 	dirPointer = opendir(ManageFiles::_savePath.c_str());
 
 	if (dirPointer == NULL) {
-		std::string nonConstant;
-		nonConstant.assign(ManageFiles::_savePath);
-		PathFunctions::CreateFile(nonConstant);
+		PathFunctions::CreateDirectory(ManageFiles::_savePath);
 		dirPointer = opendir(ManageFiles::_savePath.c_str());
 	}
 
 	while (dirEntryPointer = readdir(dirPointer)) {
-		counter++;
+		
 		if (dirEntryPointer->d_type == DT_REG) {
 			ManageFiles::_fileIDs.insert(std::make_pair(counter, std::string(dirEntryPointer->d_name)));
+			counter++;
 		}
-		closedir(dirPointer);
 	}
+	closedir(dirPointer);
 
 	return counter + 1;
 }
 
 bool ManageFiles::ErrorIfCheckFileNameExists(const std::string& fileName, std::string& errors) {
 
-	if (PathFunctions::FileExists(fileName)) {
+	if (PathFunctions::FileExists(PathFunctions::GetCurrentPath() + "/uploadedFiles/" + fileName)) {
 		errors = "File exists";
-		return false;
+		return true;
 	}
-	return true;
+	return false;
 }
 
 bool ManageFiles::CreatefileFromString(const std::string& data, const int size, const std::string& fileName, std::string& errors) {
@@ -52,8 +51,12 @@ bool ManageFiles::CreatefileFromString(const std::string& data, const int size, 
 		return false;
 	}
 
-	std::ofstream file(fileName, std::ios::binary);
+	std::ofstream file(PathFunctions::GetCurrentPath() + "/uploadedFiles/" + fileName, std::ios::binary);
 	file.write(data.c_str(), size);
+
+	_fileIDs.insert({ ManageFiles::_availableID, fileName });
+	_availableID++;
+
 	return true;
 
 }
@@ -63,7 +66,7 @@ Json::Value ManageFiles::GetAllFiles() {
 	Json::Value values;
 
 	for (std::pair<int, std::string> pair : _fileIDs) {
-		values[pair.first] = pair.second;
+		values[std::to_string(pair.first)] = pair.second;
 	}
 
 	return values;
@@ -71,10 +74,10 @@ Json::Value ManageFiles::GetAllFiles() {
 
 std::string ManageFiles::GetFileData(const int id, std::string& errors, std::string& fileName) {
 	fileName = _fileIDs.find(id)->second;
-	
-	
+	std::string appPath = PathFunctions::GetCurrentPath();
 
-	if (!PathFunctions::FileExists(fileName)) {
+
+	if (!PathFunctions::FileExists(appPath + "/uploadedFiles/" + fileName)) {
 		errors = "File not found";
 		return "";
 	}

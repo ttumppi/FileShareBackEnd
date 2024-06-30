@@ -19,6 +19,8 @@ public:
 
 	static void DeleteFile(const std::string& fileName);
 
+	static void CreateDirectory(const std::string& dir);
+
 
 private:
 

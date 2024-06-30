@@ -31,6 +31,14 @@ void PathFunctions::CreateFile(const std::string& fileName) {
 	file.close();
 }
 
+void PathFunctions::CreateDirectory(const std::string& dir) {
+
+	if (FileExists(dir)) {
+		return;
+	}
+	std::filesystem::create_directories(dir);
+}
+
 void PathFunctions::CreateDirectories(const std::string& directories) {
 
 	std::string folders = GetFolders(directories);

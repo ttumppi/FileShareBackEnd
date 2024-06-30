@@ -49,10 +49,13 @@ Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessi
         return _routes.SaveFile(request);
     });
 
-    CROW_ROUTE(app, "/download/<int>").methods("GET"_method)([this](const crow::request& request, crow::response& response, int id) {
+    CROW_ROUTE(app, "/download/<int>").methods("GET"_method)([this](const crow::request& request, int id) {
         return _routes.GetFileData(id);
         });
     
+    CROW_ROUTE(app, "/buttonScript")([this]() {
+        return _routes.FetchButtonScript();
+        });
 }
 
 void Server::Start() {

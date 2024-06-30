@@ -26,9 +26,11 @@ public:
 
 	crow::response SaveFile(const crow::request& request);
 
-	crow::response GetAllFiles();
+	std::string GetAllFiles();
 
 	crow::response GetFileData(const int id);
+
+	crow::response FetchButtonScript();
 
 private:
 	void AddCORSHeaders(crow::response& request);

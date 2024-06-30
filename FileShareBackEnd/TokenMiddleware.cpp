@@ -3,6 +3,7 @@
 #include <CurrentUserManagement.h>
 #include <list>
 #include <algorithm>
+#include <StringParser.h>
 
 TokenMiddleware::TokenMiddleware(CurrentUserManagement& sessionManagement, const std::list<std::string>& authenticatedUrls ) : _sessionManagement(sessionManagement) {
 	_authenticatedUrls = authenticatedUrls;
@@ -13,8 +14,9 @@ void TokenMiddleware::before_handle(crow::request& request, crow::response& resp
 
 	if (request.url == "/") {
 		std::string sessionToken = request.get_header_value("Cookie");
+		std::string token = StringParser::FindValueWithKey("accessToken", sessionToken, ';');
 
-		if (_sessionManagement.ValidToken(sessionToken)) {
+		if (_sessionManagement.ValidToken(token)) {
 			response.code = 303;
 			response.add_header("Location", "/homepage");
 			response.end();
@@ -22,8 +24,9 @@ void TokenMiddleware::before_handle(crow::request& request, crow::response& resp
 	}
 	if (UrlNeedsAuthentication(request.url)) {
 		std::string sessionToken = request.get_header_value("Cookie");
+		std::string token = StringParser::FindValueWithKey("accessToken", sessionToken, ';');
 
-		if (!_sessionManagement.ValidToken(sessionToken)) {
+		if (!_sessionManagement.ValidToken(token)) {
 			response.code = 303;
 			response.add_header("Location", "/login/failed");
 			response.end();

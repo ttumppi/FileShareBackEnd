@@ -18,7 +18,7 @@ private:
 
 	
 	ServerRoutes _routes;
-	const std::list<std::string> _urlsNeedingToken{ "/homepage" };
+	const std::list<std::string> _urlsNeedingToken{ "/homepage", "/upload", };
 	TokenMiddleware _tokenMiddleware;
 	crow::App<TokenMiddleware> app;
 	std::string _salt;

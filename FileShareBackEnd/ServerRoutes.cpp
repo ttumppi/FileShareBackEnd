@@ -8,6 +8,7 @@
 #include <RandomToken.h>
 #include <ManageFiles.h>
 #include <StringParser.h>
+#include <ReadWriteJson.h>
 
 ServerRoutes::ServerRoutes(CurrentUserManagement& sessionManagement) : _sessionManagement(sessionManagement) {
 }
@@ -96,12 +97,14 @@ crow::response ServerRoutes::ValidateLoginAndRedirect(const crow::request& reque
 
     if (users[userName].asString() == enteredPassword) {
 
-        response.add_header("Location", "/login/successfull");
+        response.add_header("Location", "/homepage");
 
         std::string token = _tokenGenerator.GetRandomToken(20);
 
         _sessionManagement.AddToken(token, userName);
-        response.set_header("Set-Cookie", token);
+
+        std::string tokenCookie = "accessToken=" + token + ";";
+        response.set_header("Set-Cookie", tokenCookie);
     }
     else {
         response.add_header("Location", "/login/failed");
@@ -127,23 +130,29 @@ crow::response ServerRoutes::SaveFile(const crow::request& request) {
 
     for (crow::multipart::part messagePart : message.parts) {
 
-        
+
         crow::multipart::mph_map::iterator contentHeader = messagePart.headers.find("Content-Disposition");
 
         if (contentHeader == messagePart.headers.end()) {
             continue;
         }
-
-        std::string contentHeaderValue = contentHeader->second.value;
+        std::unordered_map<std::string, std::string> contentHeaderValues = contentHeader->second.params;
 
         
 
-        std::string tryGetFileName = StringParser::FindValueWithKey("filename", contentHeaderValue, ';');
+        for (std::pair<std::string, std::string> param : contentHeaderValues) {
+            if (param.first == "filename") {
+                fileName = param.second;
+                break;
+            }
+        }
+        
 
-        if (tryGetFileName.empty()) {
+        if (fileName.empty()) {
             continue;
         }
         
+
         data = messagePart.body;
     }
 
@@ -171,15 +180,15 @@ crow::response ServerRoutes::SaveFile(const crow::request& request) {
     return redirect;
 }
 
-crow::response ServerRoutes::GetAllFiles() {
+std::string ServerRoutes::GetAllFiles() {
     Json::Value files = _manageFiles.GetAllFiles();
 
-    crow::response response;
-    response.code = 200;
-    response.set_header("Content-Type", "application/json");
-    response.body = files.asString();
+    std::string filesInString = ReadWriteJson::JsonToString(files);
+    cpr::Body body = cpr::Body(filesInString);
+    cpr::Response response = cpr::Post(cpr::Url("http://localhost:3000/files"), body, 
+        cpr::Header{{"Content-Type", "application/json"}});
 
-    return response;
+    return response.text;
 }
 
 crow::response ServerRoutes::GetFileData(const int id) {
@@ -205,8 +214,28 @@ crow::response ServerRoutes::GetFileData(const int id) {
     response.add_header("Content-Type", "application/octet-stream");
     response.add_header("Content-Disposition", contentHeaderValue.str());
 
+    AddCORSHeaders(response);
+
     response.body = data;
 
     return response;
 
+}
+
+crow::response ServerRoutes::FetchButtonScript() {
+
+    std::string path = "/home/admin/FileShareFrontEnd/src/button-functions.js";
+
+    std::ifstream file(path);
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    file.close();
+
+    crow::response resp;
+    resp.add_header("Content-Type", "application/javascript");
+    resp.code = 200;
+
+    resp.body = buffer.str();
+    AddCORSHeaders(resp);
+    return resp;
 }
