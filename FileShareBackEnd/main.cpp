@@ -23,6 +23,7 @@ int main()
 
 
     Server server = Server(_users, _salt, _sessionManagement);
+    std::cout << "Server started" << std::endl;
     server.Start();
     
 }
