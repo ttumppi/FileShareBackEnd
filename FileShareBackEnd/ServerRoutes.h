@@ -32,6 +32,8 @@ public:
 
 	crow::response FetchButtonScript();
 
+	crow::response DeleteFile(const int& id);
+
 private:
 	void AddCORSHeaders(crow::response& request);
 	CurrentUserManagement& _sessionManagement;

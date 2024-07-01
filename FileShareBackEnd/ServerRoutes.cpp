@@ -243,3 +243,17 @@ crow::response ServerRoutes::FetchButtonScript() {
     AddCORSHeaders(resp);
     return resp;
 }
+
+crow::response ServerRoutes::DeleteFile(const int& id) {
+    
+    crow::response resp;
+
+    if (_manageFiles.RemoveFile(id)) {
+        resp.code = 200;
+    }
+
+    resp.code = 300;
+    
+    AddCORSHeaders(resp);
+    return resp;
+}

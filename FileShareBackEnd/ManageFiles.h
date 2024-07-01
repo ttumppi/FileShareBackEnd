@@ -16,6 +16,8 @@ public:
 
 	std::string GetFileData(const int id, std::string& errors, std::string& filename);
 
+	bool RemoveFile(const int& fileID);
+
 private:
 
 	int CalculateAvailableIdAndInitFileMap();

@@ -98,3 +98,26 @@ std::string ManageFiles::GetFileData(const int id, std::string& errors, std::str
 
 	return data;
 }
+
+bool ManageFiles::RemoveFile(const int& fileID) {
+
+	
+
+	if (_fileIDs.find(fileID) == _fileIDs.end()) {
+		return false;
+	}
+
+	std::string fileName = _fileIDs[fileID];
+
+	std::string fullPath = _savePath + "/" + fileName;
+
+	if (!PathFunctions::FileExists(fullPath)) {
+		return false;
+	}
+
+	std::remove(fullPath.c_str());
+
+	_fileIDs.erase(fileID);
+
+	return true;
+}

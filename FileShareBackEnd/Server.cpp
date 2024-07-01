@@ -56,6 +56,10 @@ Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessi
     CROW_ROUTE(app, "/buttonScript")([this]() {
         return _routes.FetchButtonScript();
         });
+
+    CROW_ROUTE(app, "/delete/<int>").methods("GET"_method)([this](const crow::request& request, int id) {
+        return _routes.DeleteFile(id);
+        });
 }
 
 void Server::Start() {
