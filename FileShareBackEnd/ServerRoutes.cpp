@@ -180,10 +180,21 @@ crow::response ServerRoutes::SaveFile(const crow::request& request) {
     return redirect;
 }
 
-std::string ServerRoutes::GetAllFiles() {
+crow::response ServerRoutes::GetAllFiles(const crow::request& request) {
     Json::Value files = _manageFiles.GetAllFiles();
 
-    std::string filesInString = ReadWriteJson::JsonToString(files);
+    std::string sessionToken = request.get_header_value("Cookie");
+    std::string token = StringParser::FindValueWithKey("accessToken", sessionToken, ';');
+
+    Json::Value userLevel = GetUserLevel(token);
+
+    Json::Value responseJson;
+
+    responseJson["UserLevel"] = userLevel;
+
+    responseJson["files"] = files;
+
+    std::string filesInString = ReadWriteJson::JsonToString(responseJson);
 
     if (filesInString.empty() || filesInString == "null") {
         filesInString = "{}";
@@ -192,7 +203,14 @@ std::string ServerRoutes::GetAllFiles() {
     cpr::Response response = cpr::Post(cpr::Url("http://localhost:3000/files"), body, 
         cpr::Header{{"Content-Type", "application/json"}});
 
-    return response.text;
+    crow::response resp;
+
+    resp.code = 200;
+
+    resp.body = response.text;
+
+    AddCORSHeaders(resp);
+    return resp;
 }
 
 crow::response ServerRoutes::GetFileData(const int id) {
@@ -256,4 +274,23 @@ crow::response ServerRoutes::DeleteFile(const int& id) {
     
     AddCORSHeaders(resp);
     return resp;
+}
+
+Json::Value ServerRoutes::GetUserLevel(std::string& token) {
+
+    std::string user = _sessionManagement.GetUser(token);
+
+    Json::Value userLevel;
+
+    if (user == "") {
+        userLevel["UserLevel"] = 0;
+    }
+
+    if (user == "SlaveToTheCode") {
+        userLevel["UserLevel"] = 1;
+    }
+    else {
+        userLevel["UserLevel"] = 0;
+    }
+    return userLevel;
 }

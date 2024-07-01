@@ -41,8 +41,9 @@ Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessi
         return "failed";
         });
 
-    CROW_ROUTE(app, "/homepage")([this]() {
-        return _routes.GetAllFiles();
+    CROW_ROUTE(app, "/homepage")([this](const crow::request& request) {
+        return _routes.GetAllFiles(request);
+        
         });
 
     CROW_ROUTE(app, "/upload").methods("POST"_method)([this](const crow::request& request){

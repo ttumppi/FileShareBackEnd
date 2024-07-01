@@ -26,7 +26,7 @@ public:
 
 	crow::response SaveFile(const crow::request& request);
 
-	std::string GetAllFiles();
+	crow::response GetAllFiles(const crow::request& request);
 
 	crow::response GetFileData(const int id);
 
@@ -34,11 +34,16 @@ public:
 
 	crow::response DeleteFile(const int& id);
 
+	
+
 private:
-	void AddCORSHeaders(crow::response& request);
+	void AddCORSHeaders(crow::response& response);
+	Json::Value GetUserLevel(std::string& token);
+
 	CurrentUserManagement& _sessionManagement;
 	RandomToken _tokenGenerator;
 	ManageFiles _manageFiles;
+
 };
 
 #endif // SERVER_ROUTES_H
