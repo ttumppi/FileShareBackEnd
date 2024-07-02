@@ -158,26 +158,26 @@ crow::response ServerRoutes::SaveFile(const crow::request& request) {
 
     
 
-    crow::response redirect;
-    redirect.code = 303;
+    crow::response resp;
 
     if (fileName == "" || data == "") {
-        redirect.add_header("Location", "/upload");
-        AddCORSHeaders(redirect);
-        return redirect;
+        resp.add_header("Errors", "Invalid file.");
+        resp.code = 451;
+        AddCORSHeaders(resp);
+        return resp;
     }
 
     std::string errors = "";
     if (!_manageFiles.CreatefileFromString(data, data.size(), fileName, errors)) {
-        redirect.add_header("Location", "/upload/failed");
-        redirect.add_header("Errors", errors);
-        AddCORSHeaders(redirect);
-        return redirect;
+        resp.add_header("Errors", errors);
+        resp.code = 451;
+        AddCORSHeaders(resp);
+        return resp;
     }
 
-    redirect.add_header("Location", "/upload/success");
-    AddCORSHeaders(redirect);
-    return redirect;
+    resp.code = 200;
+    AddCORSHeaders(resp);
+    return resp;
 }
 
 crow::response ServerRoutes::GetAllFiles(const crow::request& request) {
