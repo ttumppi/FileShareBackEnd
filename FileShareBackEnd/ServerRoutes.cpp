@@ -186,7 +186,7 @@ crow::response ServerRoutes::GetAllFiles(const crow::request& request) {
     std::string sessionToken = request.get_header_value("Cookie");
     std::string token = StringParser::FindValueWithKey("accessToken", sessionToken, ';');
 
-    Json::Value userLevel = GetUserLevel(token);
+    int userLevel = GetUserLevel(token);
 
     Json::Value responseJson;
 
@@ -276,21 +276,19 @@ crow::response ServerRoutes::DeleteFile(const int& id) {
     return resp;
 }
 
-Json::Value ServerRoutes::GetUserLevel(std::string& token) {
+int ServerRoutes::GetUserLevel(std::string& token) {
 
     std::string user = _sessionManagement.GetUser(token);
 
-    Json::Value userLevel;
 
     if (user == "") {
-        userLevel["UserLevel"] = 0;
+        return 0;
     }
 
     if (user == "SlaveToTheCode") {
-        userLevel["UserLevel"] = 1;
+        return 1;
     }
     else {
-        userLevel["UserLevel"] = 0;
+        return 0;
     }
-    return userLevel;
 }

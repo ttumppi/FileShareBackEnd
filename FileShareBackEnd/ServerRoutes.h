@@ -38,7 +38,7 @@ public:
 
 private:
 	void AddCORSHeaders(crow::response& response);
-	Json::Value GetUserLevel(std::string& token);
+	int GetUserLevel(std::string& token);
 
 	CurrentUserManagement& _sessionManagement;
 	RandomToken _tokenGenerator;
