@@ -4,13 +4,14 @@
 #include <json.h>
 #include <CurrentUserManagement.h>
 
+
 Server::Server(Json::Value users, std::string salt, CurrentUserManagement& sessionManagement) : _routes(sessionManagement), _tokenMiddleware(sessionManagement, _urlsNeedingToken),
     app(_tokenMiddleware), _sessionManagement(sessionManagement){
 
     _users = users;
     _salt = salt;
     
-    
+    app.ssl_file("/home/admin/FileShareBackEndCertificates/dabblestudios.tplinkdns.com.crt", "/home/admin/FileShareBackEndCertificates/private.key");
     
 
     CROW_ROUTE(app, "/")([this]() {

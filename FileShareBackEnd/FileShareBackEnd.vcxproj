@@ -133,11 +133,13 @@
     <ClCompile>
       <AdditionalIncludeDirectories>/home/admin/libraryFiles/asioLibrary/;/home/admin/libraryFiles/asioLibrary/asio;/home/admin/libraryFiles/crowLibrary;/home/admin/libraryFiles/jsoncpp;/usr/local/include;/home/admin/projects/FileShareBackEnd;/home/admin/libraryFiles/opensslLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++17</CppLanguageStandard>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>-DCROW_ENABLE_SSL %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>-pthread -Wl,-rpath,/home/admin/libraryFiles/jsoncpp %(AdditionalOptions)</AdditionalOptions>
-      <LibraryDependencies>jsoncpp;cpr;crypto;%(LibraryDependencies)</LibraryDependencies>
+      <LibraryDependencies>jsoncpp;cpr;crypto;ssl;%(LibraryDependencies)</LibraryDependencies>
       <AdditionalLibraryDirectories>/usr/local/lib/arm-linux-gnueabihf;/home/admin/libraryFiles/jsoncpp;/home/admin/libraryFiles/opensslLibrary;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SharedLibrarySearchPath>/home/admin/libraryFiles/jsoncpp;/usr/local/lib/arm-linux-gnueabihf;/home/admin/libraryFiles/opensslLibrary;%(SharedLibrarySearchPath)</SharedLibrarySearchPath>
     </Link>
